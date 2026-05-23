@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QueryBook</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Book discovery for curious readers</p>
+        <h1>QueryBook</h1>
+        <p class="lead">Search millions of books, save your favorites, and keep your reading list safe in the browser.</p>
+      </div>
+      <form class="search-form" id="search-form" novalidate>
+        <label class="search-label" for="search-input">Search books</label>
+        <div class="search-controls">
+          <input id="search-input" class="search-input" type="search" placeholder="Search by title, author, or keyword" autocomplete="off" />
+          <select id="sort-select" class="sort-select" aria-label="Sort search results">
+            <option value="relevance">Relevance</option>
+            <option value="new">Newest</option>
+            <option value="old">Oldest</option>
+            <option value="rating">Top rated</option>
+          </select>
+        </div>
+      </form>
+    </header>
+
+    <main class="main-grid">
+      <section class="panel" aria-labelledby="results-heading">
+        <div class="panel-header">
+          <h2 id="results-heading">Search results</h2>
+          <p id="results-summary" class="summary-text">Enter a query to begin.</p>
+        </div>
+        <div id="results-container" class="cards-grid"></div>
+      </section>
+
+      <section class="panel" aria-labelledby="list-heading">
+        <div class="panel-header">
+          <h2 id="list-heading">My reading list</h2>
+          <p class="summary-text">Books you save appear here.</p>
+        </div>
+        <div id="reading-list-container" class="cards-grid"></div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
