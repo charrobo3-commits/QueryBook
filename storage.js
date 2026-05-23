@@ -1,4 +1,14 @@
+import { 
+  fetchReadingListFromCloud, 
+  saveReadingListToCloud 
+} from './firebase.js';
+
 const STORAGE_KEY = 'bookfinder-reading-list';
+let cloudSyncEnabled = false;
+
+export function enableCloudSync() {
+  cloudSyncEnabled = true;
+}
 
 export function loadReadingList() {
   try {
@@ -10,9 +20,30 @@ export function loadReadingList() {
   }
 }
 
+export async function syncReadingListFromCloud() {
+  try {
+    const cloudList = await fetchReadingListFromCloud();
+    if (cloudList.length > 0) {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(cloudList));
+      return cloudList;
+    }
+    return loadReadingList();
+  } catch (error) {
+    console.error('Failed to sync from cloud', error);
+    return loadReadingList();
+  }
+}
+
 export function saveReadingList(list) {
   try {
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+    
+    // Sync to cloud if enabled
+    if (cloudSyncEnabled) {
+      saveReadingListToCloud(list).catch(error => {
+        console.warn('Cloud sync failed (local save succeeded)', error);
+      });
+    }
   } catch (error) {
     console.error('Failed to save reading list', error);
   }
