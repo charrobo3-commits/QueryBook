@@ -10,8 +10,11 @@ export async function searchBooks(query, sort = 'relevance') {
     q: query,
     fields: FIELDS,
     limit: '20',
-    sort,
   });
+
+  if (sort && sort !== 'relevance') {
+    params.set('sort', sort);
+  }
 
   const response = await fetch(`${API_BASE}?${params.toString()}`);
   if (!response.ok) {
